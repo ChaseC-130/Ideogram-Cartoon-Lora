@@ -15,8 +15,8 @@ project recipes, local checkpoints, and LoRA weights are ignored by default.
 
 ## What Is Not Included
 
-- Training images or captions.
-- Generated image outputs.
+- Your training images or captions.
+- Full generated run outputs.
 - LoRA weight files.
 - Base model checkpoints.
 - Private project-specific batch recipes.
@@ -32,6 +32,15 @@ python3 -m venv .venv
 source .venv/bin/activate
 pip install -r requirements.txt
 cp .env.example .env
+```
+
+Download the published LoRA adapter from Hugging Face:
+
+```bash
+mkdir -p weights
+./venv/bin/hf download Snip130/ideogram-cartoon-lora \
+  ideogram_cartoon_lora.safetensors \
+  --local-dir weights
 ```
 
 If you use Ideogram 4 weights from Hugging Face, accept the model gate and
@@ -162,3 +171,5 @@ training data rights, intended use, and license compatibility. See
 `MODEL_CARD_TEMPLATE.md`.
 
 This project's Hugging Face model-card draft lives at `huggingface/README.md`.
+
+Published adapter: [Snip130/ideogram-cartoon-lora](https://huggingface.co/Snip130/ideogram-cartoon-lora).
