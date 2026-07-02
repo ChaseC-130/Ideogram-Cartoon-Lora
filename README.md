@@ -122,9 +122,16 @@ The repo includes three synthetic source sketches, prompts, and generated
 sample outputs. These are small 512px examples intended to make the workflow
 easy to try end to end.
 
-| Clockwork beetle | Crystal lantern | Storm dragon |
+| With LoRA: clockwork beetle | With LoRA: crystal lantern | With LoRA: storm dragon |
 | --- | --- | --- |
 | <img src="samples/generated/clockwork_beetle.png" alt="Clockwork beetle" width="256"> | <img src="samples/generated/crystal_lantern.png" alt="Crystal lantern" width="256"> | <img src="samples/generated/storm_dragon.png" alt="Storm dragon" width="256"> |
+
+Base model comparison, generated with the same source sketches and prompt cache
+but with `--no-lora`:
+
+| No LoRA: clockwork beetle | No LoRA: crystal lantern | No LoRA: storm dragon |
+| --- | --- | --- |
+| <img src="samples/generated_base/clockwork_beetle.png" alt="Clockwork beetle generated without LoRA" width="256"> | <img src="samples/generated_base/crystal_lantern.png" alt="Crystal lantern generated without LoRA" width="256"> | <img src="samples/generated_base/storm_dragon.png" alt="Storm dragon generated without LoRA" width="256"> |
 
 Recreate the samples after downloading the LoRA weights:
 
@@ -141,6 +148,23 @@ python scripts/batch_img2img_all.py \
   --strength 0.88 \
   --device mps \
   --seed 21
+```
+
+Generate the base-model comparison set:
+
+```bash
+python scripts/batch_img2img_all.py \
+  --ai-toolkit-path ../ai-toolkit \
+  --source-dir samples/source_images \
+  --prompt-cache samples/prompt_cache.json \
+  --clean-prompt-cache samples/prompt_cache.json \
+  --output-dir output/sample_generated_base \
+  --steps 20 \
+  --guidance 3.6 \
+  --strength 0.88 \
+  --device mps \
+  --seed 21 \
+  --no-lora
 ```
 
 ## Refine And VOSR

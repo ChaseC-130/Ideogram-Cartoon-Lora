@@ -22,9 +22,16 @@ Repository and scripts:
 
 ## Sample Outputs
 
-| Clockwork beetle | Crystal lantern | Storm dragon |
+| With LoRA: clockwork beetle | With LoRA: crystal lantern | With LoRA: storm dragon |
 | --- | --- | --- |
 | <img src="samples/generated/clockwork_beetle.png" alt="Clockwork beetle" width="256"> | <img src="samples/generated/crystal_lantern.png" alt="Crystal lantern" width="256"> | <img src="samples/generated/storm_dragon.png" alt="Storm dragon" width="256"> |
+
+Base model comparison, generated with the same source sketches and prompt cache
+but with `--no-lora`:
+
+| No LoRA: clockwork beetle | No LoRA: crystal lantern | No LoRA: storm dragon |
+| --- | --- | --- |
+| <img src="samples/generated_base/clockwork_beetle.png" alt="Clockwork beetle generated without LoRA" width="256"> | <img src="samples/generated_base/crystal_lantern.png" alt="Crystal lantern generated without LoRA" width="256"> | <img src="samples/generated_base/storm_dragon.png" alt="Storm dragon generated without LoRA" width="256"> |
 
 ## Sample Prompts
 
@@ -70,6 +77,7 @@ python scripts/run_image_to_image.py \
 - `samples/prompt_cache.json`: prompt cache for the batch img2img script.
 - `samples/source_images/`: synthetic source sketches used for examples.
 - `samples/generated/`: generated sample outputs.
+- `samples/generated_base/`: base-model outputs generated without the LoRA.
 
 ## License Notes
 

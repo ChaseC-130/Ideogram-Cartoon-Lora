@@ -4,6 +4,7 @@ import sys
 import os
 import gc
 import argparse
+import contextlib
 import json
 import cv2
 from pathlib import Path
@@ -154,6 +155,11 @@ def parse_args():
         type=Path,
         default=PROJECT_ROOT / "weights" / "cartoon_lora.safetensors",
     )
+    parser.add_argument(
+        "--no-lora",
+        action="store_true",
+        help="Run the base model without loading/applying a LoRA adapter.",
+    )
     parser.add_argument("--model-id", default="ideogram-ai/ideogram-4-fp8")
     parser.add_argument("--device", default="mps")
     parser.add_argument("--strength", type=float, default=0.70)
@@ -176,7 +182,6 @@ def main():
 
     device = args.device
     model_id = args.model_id
-    lora_path = str(args.lora_path)
     print(f"Using AI Toolkit at {ai_toolkit_path}")
 
     source_dir = args.source_dir
@@ -184,7 +189,7 @@ def main():
     if not source_dir.exists():
         print(f"Error: source directory not found: {source_dir}")
         sys.exit(1)
-    if not args.lora_path.exists():
+    if not args.no_lora and not args.lora_path.exists():
         print(f"Error: LoRA file not found: {args.lora_path}")
         sys.exit(1)
 
@@ -232,26 +237,30 @@ def main():
     model.load_model()
     model.model.to(device, dtype=torch.bfloat16)
 
-    # 2. Load LoRA
-    print("Loading LoRA weights...")
-    network = LoRASpecialNetwork(
-        text_encoder=model.text_encoder,
-        unet=model.model,
-        lora_dim=16,
-        alpha=16,
-        multiplier=1.0,
-        train_text_encoder=False,
-        train_unet=True,
-        is_transformer=model.is_transformer,
-        target_lin_modules=model.target_lora_modules,
-        base_model=model,
-        transformer_only=True
-    )
-    network.apply_to(model.text_encoder, model.model, apply_text_encoder=False, apply_unet=True)
-    network.load_weights(lora_path)
-    network.force_to(device, dtype=torch.bfloat16)
-    network._update_torch_multiplier()
-    network.eval()
+    # 2. Optionally load LoRA
+    network = None
+    if args.no_lora:
+        print("Skipping LoRA adapter; running base model only.")
+    else:
+        print("Loading LoRA weights...")
+        network = LoRASpecialNetwork(
+            text_encoder=model.text_encoder,
+            unet=model.model,
+            lora_dim=16,
+            alpha=16,
+            multiplier=1.0,
+            train_text_encoder=False,
+            train_unet=True,
+            is_transformer=model.is_transformer,
+            target_lin_modules=model.target_lora_modules,
+            base_model=model,
+            transformer_only=True
+        )
+        network.apply_to(model.text_encoder, model.model, apply_text_encoder=False, apply_unet=True)
+        network.load_weights(str(args.lora_path))
+        network.force_to(device, dtype=torch.bfloat16)
+        network._update_torch_multiplier()
+        network.eval()
 
     transformer = model.model
     scheduler = model.get_train_scheduler()
@@ -311,7 +320,8 @@ def main():
             uncond_feats, uncond_mask = pad_text_features(unconditional_embeds.text_embeds, device, model.torch_dtype)
 
             generator = torch.Generator(device=device).manual_seed(args.seed)
-            with network:
+            lora_context = network if network is not None else contextlib.nullcontext()
+            with lora_context:
                 out_img = run_img2img(
                     model, transformer, scheduler, cond_feats, cond_mask, uncond_feats, uncond_mask,
                     img_tensor, args.strength, args.steps, args.guidance, device, generator
