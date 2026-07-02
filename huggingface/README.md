@@ -24,7 +24,7 @@ Repository and scripts:
 
 | Clockwork beetle | Crystal lantern | Storm dragon |
 | --- | --- | --- |
-| ![Clockwork beetle](samples/generated/clockwork_beetle.png) | ![Crystal lantern](samples/generated/crystal_lantern.png) | ![Storm dragon](samples/generated/storm_dragon.png) |
+| <img src="samples/generated/clockwork_beetle.png" alt="Clockwork beetle" width="256"> | <img src="samples/generated/crystal_lantern.png" alt="Crystal lantern" width="256"> | <img src="samples/generated/storm_dragon.png" alt="Storm dragon" width="256"> |
 
 ## Sample Prompts
 
