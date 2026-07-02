@@ -1,0 +1,54 @@
+.DS_Store
+
+# Python
+__pycache__/
+*.py[cod]
+.pytest_cache/
+.mypy_cache/
+.ruff_cache/
+.venv/
+venv/
+
+# Local secrets and machine-specific settings
+.env
+.env.*
+!.env.example
+local/
+private/
+
+# User/source data and generated artifacts
+input/
+dataset/
+dataset_v2/
+output/
+weights/
+models/
+checkpoints/
+
+# Large model/checkpoint files. Put release weights on Hugging Face or Git LFS
+# intentionally, not through an accidental `git add .`.
+*.safetensors
+*.ckpt
+*.pt
+*.pth
+*.bin
+*.gguf
+
+# External checkouts and their environments/checkpoints.
+external/
+
+# Local AI Toolkit configs. Public templates live in config/*.example.yaml.
+config/*.yaml
+!config/*.example.yaml
+
+# Project-specific/private helpers kept locally.
+scripts/batch_generate_units.py
+scripts/batch_img2img_economy_icons.py
+scripts/batch_img2img_units.py
+scripts/custom_prompts.py
+scripts/debug_keys.py
+scripts/prepare_scrip_e2e_sources.py
+scripts/test_img2img_samples.py
+scripts/test_img2img_samples_undead.py
+scripts/test_img2img_tribes.py
+scripts/test_img2img_variance.py

@@ -1,0 +1,10 @@
+accelerate
+diffusers
+google-genai
+numpy
+opencv-python
+pillow
+safetensors
+torch
+torchvision
+transformers

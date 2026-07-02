@@ -1,0 +1,51 @@
+# AI Toolkit LoRA training template for Ideogram 4 on Apple Silicon.
+# Copy to config/train_lora_mac.yaml and edit local paths before running.
+
+job: extension
+config:
+  name: "ideogram4_cartoon_lora_mac"
+  process:
+    - type: "sd_trainer"
+      training_folder: "/absolute/path/to/ai-toolkit/output"
+      device: "mps"
+      trigger_word: "custom_subject"
+
+      network:
+        type: "lora"
+        linear: 16
+        linear_alpha: 16
+
+      save:
+        dtype: float16
+        save_every: 250
+        max_step_saves_to_keep: 4
+
+      datasets:
+        - folder_path: "/absolute/path/to/this-repo/dataset"
+          caption_ext: "json"
+          resolution: [1024, 1024]
+          batch_size: 1
+
+      train:
+        epochs: 15
+        steps: 2000
+        gradient_accumulation_steps: 1
+        lr: 1e-4
+        optimizer: "adamw"
+        lr_scheduler: "constant"
+        noise_scheduler: "flowmatch"
+
+      model:
+        name_or_path: "ideogram-ai/ideogram-4-fp8"
+        arch: "ideogram4"
+        quantize: false
+        gradient_checkpointing: true
+
+      sample:
+        sampler: "flowmatch"
+        sample_every: 250
+        width: 1024
+        height: 1024
+        prompts:
+          - "[trigger] cartoon game asset, clean readable silhouette, no text"
+          - "[trigger] colorful cel-shaded illustration with crisp edges"
