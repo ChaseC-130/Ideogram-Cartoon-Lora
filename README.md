@@ -107,6 +107,33 @@ python scripts/batch_img2img_all.py \
   --limit 5
 ```
 
+## Samples
+
+The repo includes three synthetic source sketches, prompts, and generated
+sample outputs. These are small 512px examples intended to make the workflow
+easy to try end to end.
+
+| Clockwork beetle | Crystal lantern | Storm dragon |
+| --- | --- | --- |
+| ![Clockwork beetle](samples/generated/clockwork_beetle.png) | ![Crystal lantern](samples/generated/crystal_lantern.png) | ![Storm dragon](samples/generated/storm_dragon.png) |
+
+Recreate the samples after downloading the LoRA weights:
+
+```bash
+python scripts/batch_img2img_all.py \
+  --ai-toolkit-path ../ai-toolkit \
+  --source-dir samples/source_images \
+  --prompt-cache samples/prompt_cache.json \
+  --clean-prompt-cache samples/prompt_cache.json \
+  --lora-path weights/ideogram_cartoon_lora.safetensors \
+  --output-dir output/sample_generated \
+  --steps 20 \
+  --guidance 3.6 \
+  --strength 0.88 \
+  --device mps \
+  --seed 21
+```
+
 ## Refine And VOSR
 
 ```bash
@@ -133,3 +160,5 @@ Prefer publishing LoRA weights as a Hugging Face model/adapters repo rather
 than committing them to GitHub. Include a model card that names the base model,
 training data rights, intended use, and license compatibility. See
 `MODEL_CARD_TEMPLATE.md`.
+
+This project's Hugging Face model-card draft lives at `huggingface/README.md`.
