@@ -6,14 +6,13 @@ Weights: [Snip130/ideogram-cartoon-lora](https://huggingface.co/Snip130/ideogram
 
 ## Samples
 
-Base model vs. the trained LoRA at the same prompt and seed. The owl and
-mushroom are pure text-to-image; the crystal lantern is image-to-image from a
-rough sketch.
+Base model vs. the trained LoRA at the same prompt and seed. The mushroom is
+pure text-to-image; the crystal lantern is image-to-image from a rough sketch.
 
-| | Owl | Crystal Lantern | Mushroom |
-| --- | --- | --- | --- |
-| **Base, no LoRA** | <img src="samples/generated_base/owl.png" alt="Owl, base model" width="220"> | <img src="samples/generated_base/crystal_lantern.png" alt="Crystal lantern, base model" width="220"> | <img src="samples/generated_base/mushroom.png" alt="Mushroom, base model" width="220"> |
-| **With LoRA** | <img src="samples/generated/owl.png" alt="Owl with LoRA" width="220"> | <img src="samples/generated/crystal_lantern.png" alt="Crystal lantern with LoRA" width="220"> | <img src="samples/generated/mushroom.png" alt="Mushroom with LoRA" width="220"> |
+| | Crystal Lantern | Mushroom |
+| --- | --- | --- |
+| **Base, no LoRA** | <img src="samples/generated_base/crystal_lantern.png" alt="Crystal lantern, base model" width="220"> | <img src="samples/generated_base/mushroom.png" alt="Mushroom, base model" width="220"> |
+| **With LoRA** | <img src="samples/generated/crystal_lantern.png" alt="Crystal lantern with LoRA" width="220"> | <img src="samples/generated/mushroom.png" alt="Mushroom with LoRA" width="220"> |
 
 ## Quick Start
 
@@ -92,17 +91,16 @@ python scripts/run_image_to_image.py \
 
 ## Text To Image (No Source)
 
-The owl and mushroom samples are generated straight from a prompt, with no
-source image:
+The mushroom sample is generated straight from a prompt, with no source image:
 
 ```bash
 python scripts/txt2img_clean.py \
   --ai-toolkit-path ../ai-toolkit \
   --lora-path weights/ideogram_cartoon_lora.safetensors \
-  --prompt "A cute round owl mascot with big friendly eyes, soft layered feathers, perched on a soft dark teal-to-forest-green gradient background, chunky readable silhouette, clean cel-shaded edges, vibrant cartoon game asset style, no text or letters." \
-  --slug owl \
+  --prompt "A cheerful mushroom character with a rounded red cap and white spots, a plump cream stem, a small friendly face and little feet, centered on a soft dark teal-to-forest-green gradient background, chunky readable silhouette, clean cel-shaded edges, vibrant cartoon game asset style, no text or letters." \
+  --slug mushroom \
   --output-dir output/txt2img \
-  --size 1024 --steps 28 --guidance 3.5 --device mps --seed 42
+  --size 1024 --steps 28 --guidance 3.5 --device mps --seed 21
 ```
 
 Add `--no-lora` for the base-model comparison.
