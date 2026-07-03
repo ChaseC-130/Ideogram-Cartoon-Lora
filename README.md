@@ -6,13 +6,12 @@ Weights: [Snip130/ideogram-cartoon-lora](https://huggingface.co/Snip130/ideogram
 
 ## Samples
 
-| With LoRA | With LoRA | With LoRA |
-| --- | --- | --- |
-| <img src="samples/generated/clockwork_beetle.png" alt="Clockwork beetle with LoRA" width="256"> | <img src="samples/generated/crystal_lantern.png" alt="Crystal lantern with LoRA" width="256"> | <img src="samples/generated/storm_dragon.png" alt="Storm dragon with LoRA" width="256"> |
+Base model vs. the trained LoRA — same source image and seed:
 
-| Base model, no LoRA | Base model, no LoRA | Base model, no LoRA |
-| --- | --- | --- |
-| <img src="samples/generated_base/clockwork_beetle.png" alt="Clockwork beetle without LoRA" width="256"> | <img src="samples/generated_base/crystal_lantern.png" alt="Crystal lantern without LoRA" width="256"> | <img src="samples/generated_base/storm_dragon.png" alt="Storm dragon without LoRA" width="256"> |
+| | Treasure Chest | Crystal Lantern | Slime |
+| --- | --- | --- | --- |
+| **Base, no LoRA** | <img src="samples/generated_base/treasure_chest.png" alt="Treasure chest, base model" width="220"> | <img src="samples/generated_base/crystal_lantern.png" alt="Crystal lantern, base model" width="220"> | <img src="samples/generated_base/slime.png" alt="Slime, base model" width="220"> |
+| **With LoRA** | <img src="samples/generated/treasure_chest.png" alt="Treasure chest with LoRA" width="220"> | <img src="samples/generated/crystal_lantern.png" alt="Crystal lantern with LoRA" width="220"> | <img src="samples/generated/slime.png" alt="Slime with LoRA" width="220"> |
 
 ## Quick Start
 
