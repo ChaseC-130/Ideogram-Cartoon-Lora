@@ -6,12 +6,14 @@ Weights: [Snip130/ideogram-cartoon-lora](https://huggingface.co/Snip130/ideogram
 
 ## Samples
 
-Base model vs. the trained LoRA — same source image and seed:
+Base model vs. the trained LoRA at the same prompt and seed. The owl and
+mushroom are pure text-to-image; the crystal lantern is image-to-image from a
+rough sketch.
 
-| | Treasure Chest | Crystal Lantern | Slime |
+| | Owl | Crystal Lantern | Mushroom |
 | --- | --- | --- | --- |
-| **Base, no LoRA** | <img src="samples/generated_base/treasure_chest.png" alt="Treasure chest, base model" width="220"> | <img src="samples/generated_base/crystal_lantern.png" alt="Crystal lantern, base model" width="220"> | <img src="samples/generated_base/slime.png" alt="Slime, base model" width="220"> |
-| **With LoRA** | <img src="samples/generated/treasure_chest.png" alt="Treasure chest with LoRA" width="220"> | <img src="samples/generated/crystal_lantern.png" alt="Crystal lantern with LoRA" width="220"> | <img src="samples/generated/slime.png" alt="Slime with LoRA" width="220"> |
+| **Base, no LoRA** | <img src="samples/generated_base/owl.png" alt="Owl, base model" width="220"> | <img src="samples/generated_base/crystal_lantern.png" alt="Crystal lantern, base model" width="220"> | <img src="samples/generated_base/mushroom.png" alt="Mushroom, base model" width="220"> |
+| **With LoRA** | <img src="samples/generated/owl.png" alt="Owl with LoRA" width="220"> | <img src="samples/generated/crystal_lantern.png" alt="Crystal lantern with LoRA" width="220"> | <img src="samples/generated/mushroom.png" alt="Mushroom with LoRA" width="220"> |
 
 ## Quick Start
 
@@ -88,6 +90,23 @@ python scripts/run_image_to_image.py \
   --seed 21
 ```
 
+## Text To Image (No Source)
+
+The owl and mushroom samples are generated straight from a prompt, with no
+source image:
+
+```bash
+python scripts/txt2img_clean.py \
+  --ai-toolkit-path ../ai-toolkit \
+  --lora-path weights/ideogram_cartoon_lora.safetensors \
+  --prompt "A cute round owl mascot with big friendly eyes, soft layered feathers, perched on a soft dark teal-to-forest-green gradient background, chunky readable silhouette, clean cel-shaded edges, vibrant cartoon game asset style, no text or letters." \
+  --slug owl \
+  --output-dir output/txt2img \
+  --size 1024 --steps 28 --guidance 3.5 --device mps --seed 42
+```
+
+Add `--no-lora` for the base-model comparison.
+
 ## Compare Against The Base Model
 
 Run the same sample batch without the adapter:
@@ -109,12 +128,14 @@ python scripts/batch_img2img_all.py \
 
 ## Useful Files
 
-- `samples/source_images/`: tiny synthetic source sketches
+- `samples/source_images/`: source sketch for the image-to-image sample
 - `samples/generated/`: LoRA sample outputs
 - `samples/generated_base/`: no-LoRA comparison outputs
-- `samples/prompt_cache.json`: prompts for the sample batch
-- `scripts/run_image_to_image.py`: one image
-- `scripts/batch_img2img_all.py`: many images
+- `samples/prompt_cache.json`: prompts for the image-to-image sample batch
+- `samples/txt2img_prompts.json`: prompts for the text-to-image samples
+- `scripts/run_image_to_image.py`: one image, image-to-image
+- `scripts/batch_img2img_all.py`: many images, image-to-image
+- `scripts/txt2img_clean.py`: text-to-image (no source)
 - `config/*.example.yaml`: optional training config templates
 
 ## License Notes
